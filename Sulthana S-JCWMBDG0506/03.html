@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORM USER</title>
+    <style>
+       
+        input{
+            border-radius: 10%;
+            margin-right: 2vw;
+        }
+
+        #forTable {
+            margin: auto;
+            width: 50vw;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <div id="body" style="width: 50vw;height: 50vh">
+        <h1>FORM USER</h1>
+        <form>
+            <input type= "text" id="username" placeholder="Username">
+            <input type= "text" id="email" placeholder="Email">
+            <label for="role">Role: </label>
+            <select id="role">
+                <option value="Choose Role" disabled selected>Choose Role</option>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+            </select>
+            <br>
+            <button type="button" onclick="onBtnAdd()">Add User</button>
+        </form>
+        <div>
+            <h1>USERS DATA</h1>
+            <table id="forTable" border="1px solid black" style="margin: auto;">
+                <thead>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </thead>
+                <tbody id="list-user">
+                    
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </center>
+</body>
+
+<script>
+
+    data = []
+    let listRole = ['Choose Role', 'User', 'Admin']
+    class user{
+        constructor(_username, _email, _role){
+            this.username= _username
+            this.email= _email
+            this.role= _role
+        }
+    }
+
+    function onBtnAdd(){
+        let username = document.getElementById("username").value
+        let email = document.getElementById("email").value
+        let role = document.getElementById("role").value
+        data.push(new user(username, email, role))
+        console.log(data)
+        if(username == ''){
+            alert('Dimohon isi Username')
+        } else if(email == ''){
+            alert('Dimohon isi Email')
+        } else if(role == ''){
+            alert('Dimohon pilih role')
+        }
+        document.getElementById("username").value = null
+        document.getElementById("email").value = null
+        document.getElementById("role").value = null
+        printUser()
+    }
+
+    function printUser(idxEdit, dataProduk = data){
+        let htmlElement = dataProduk.map((item, idx) => {
+            if(idxEdit == idx){
+                return `<tr>
+                <td>${idx+1}</td>
+                <td><input type="text" id="newusername" value="${item.username}"></td>
+                <td><input type="text" id="newemail" value="${item.email}"></td>
+                <td>
+                    <select id="newrole" value ="${item.role}">
+                        ${printRole(item.role)}
+                    </select>
+                    </td>
+                <td><input type="button" value="Save" onclick="onBtnSave(${idx})"><input type="button" value="Cancel" onclick="onBtnCancel(${idx})"></td>
+                </tr>`
+            } else {
+                return `<tr>
+                <td>${idx+1}</td>
+                <td>${item.username}</td>
+                <td>${item.email}</td>
+                <td>${item.role}</td>
+                <td><input type= "button" value= "Edit" onclick="onBtnEdit(${idx})"><input type= "button" value= "Delete" onclick="onBtnDelete(${idx})"></td>              
+                </tr>`
+            }
+            
+        })
+        document.getElementById('list-user').innerHTML = htmlElement.join('')
+    }
+
+    function printRole(role){
+        let opsiRole = listRole.map((item, index) =>{
+            if(role == item){
+                return `<option value= "${item}" selected>${item}</option>`
+            } else{
+                return `<option value= "${item}">${item}</option>`
+            }
+        })
+        return opsiRole.join('')
+    }
+
+    function onBtnDelete(idx){
+    data.splice(idx, 1)  
+    printUser()
+    }
+    printUser()
+
+    function onBtnEdit(idx){
+        printUser(idx)
+    }
+
+    function onBtnSave(idx){
+        let username = document.getElementById("newusername").value
+        let email = document.getElementById("newemail").value
+        let role = document.getElementById("newrole").value
+        let newData = {username, email, role}
+        let konfirmasi = confirm("Save Data?")
+        if(konfirmasi == true){
+            data.splice(idx, 1, newData)
+            printUser()
+        } else {
+            printUser()
+        }
+
+    }
+
+    function onBtnCancel(idx){
+        printUser()
+    }
+
+</script>
+</html>

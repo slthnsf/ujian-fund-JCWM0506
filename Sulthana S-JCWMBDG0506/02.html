@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fibonacci</title>
+</head>
+<body>
+    <h1>DERET FIBONACCI</h1>
+    <label for="input">Masukkan Angka: </label>
+    <input type="text" id="input" placeholder="Masukkan Angka "><br><br>
+    <button id="show" onclick="fibonacci('show')">SHOW</button>
+    <button id="ganjil" onclick="fibonacci('ganjil')">GANJIL</button>
+    <button id="genap" onclick="fibonacci('genap')">GENAP</button>
+    <br>
+    <h1>RESULT</h1>
+    <p id="output"></p>
+</body>
+
+<script>
+
+    function fibonacci(input) { 
+        var inputNumb = document.getElementById("input").value;
+        var result = ""
+        var hitung = ""
+
+        let n1 = 0
+        let n2 = 1
+        let nnext = 0
+        var textshow = `${n1} ${n2}`
+        while (nnext <= inputNumb) {
+            nnext = n1 + n2
+            if(nnext > inputNumb){
+                break
+            }
+            n1 = n2
+            n2 = nnext
+            if(input == 'show'){
+                textshow += ` ${nnext}`
+            }else if(input == 'ganjil'){
+                var total = 1
+                if(nnext % 2 == 1){
+                    hitung += "1 + " + String(nnext)
+                    total += nnext
+                    hasil = hitung + " = " + total
+                }
+            }else if(input == 'genap'){
+                var total = 0
+                if(nnext % 2 == 0){
+                    hitung += "0 + " + String(nnext)
+                    total += nnext
+                    hasil = hitung + " = " + total
+                    }
+                }
+            }
+            if(input == 'show'){
+                document.getElementById("output").innerHTML = textshow; 
+            }else{
+                document.getElementById("output").innerHTML = hasil; 
+            }
+            
+        }  
+</script>
+</html>

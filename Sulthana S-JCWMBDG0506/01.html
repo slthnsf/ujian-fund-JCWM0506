@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pattern</title>
+</head>
+<body>
+    <h1>PATTERN</h1>
+    <input type="text" id="input" placeholder="Masukkan Angka "><br><br>
+    <button id="ganjil" onclick="onBtnGanjil()">GANJIL</button>
+    <button id="huruf" onclick="onBtnHuruf()">HURUF</button>
+    <br>
+    <h1>RESULT</h1>
+    <p id="output"></p>
+
+</body>
+
+<script>
+    function onBtnGanjil() {
+    var n = document.getElementById("input").value
+    var str = ""
+    var a = 1
+    for (var i = 1; i <= n; i++) {
+        for (var j = 0; j < i; j++) {
+            str += `${a} `
+            a = a + 2 
+        }
+        str += "<br>"
+    }
+    document.getElementById('output').innerHTML = str
+    }
+
+    function onBtnHuruf() {
+    var n = document.getElementById("input").value;
+    var str = ""
+    var a = 1
+    for (var i = 1; i <= n; i++) {
+        for (var j = 0; j < i; j++) {
+            var ganjil = String.fromCharCode(a + 65)
+            str += `${ganjil} `
+            a = a + 2
+        }
+        str += "<br>"
+    }
+    document.getElementById('output').innerHTML = str
+    }
+
+</script>
+</html>
